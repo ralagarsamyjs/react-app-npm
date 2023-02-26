@@ -8,9 +8,7 @@ import Pagination from "./pagination";
 
 function Dashboard() {
   const [pkges, setPkges] = useState<IRawPackageInfo[]>([]);
-  const [pkgName, setPkgName] = useState("");
   const [searchText, setSearchText] = useState("lodash");
-  const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [startPageIndex, setStartPageIndex] = useState(1);
@@ -21,31 +19,17 @@ function Dashboard() {
   const maxItemsPerQuery = 250;
 
   const getPackageList = async () => {
-    console.log(
-      "getPackageList : ",
-      searchIndex,
-      pkges.length,
-      totalItemWithoutFilter
-    );
     const service = pkgService.getPkgServiceInstance();
     const list: IRawPackageList = await service.getPackageListWithInputText(
       searchText,
       maxItemsPerQuery,
       searchIndex
     );
-    console.log(
-      "before list total & searched pkg length: ",
-      list.total,
-      list.packages.length
-    );
     const pkgesClone = [...pkges, ...list.packages];
-    console.log("after pkgesClone length: ", pkgesClone.length);
     setTotalItemWithoutFilter(list.total);
     setPkges(pkgesClone);
-    // setLoading(false);
   };
   useEffect(() => {
-    // setLoading(true);
     getPackageList();
   }, [searchText, searchIndex]);
 
@@ -55,7 +39,6 @@ function Dashboard() {
   };
 
   const onPaginationHandler = (page: number) => {
-    console.log("onPaginationHandler - ", page);
     setCurrentPage(page);
   };
 
@@ -72,17 +55,6 @@ function Dashboard() {
   const onNextBtnClickHandle = () => {
     const ReachedbufferLimit = currentPage * itemPerPage + itemPerPage;
     const ReachedPageLimit = Math.ceil(pkges.length / itemPerPage);
-    console.log(
-      "onNextBtnClickHandle- ",
-      ReachedbufferLimit,
-      currentPage,
-      pkges.length,
-      searchIndex,
-      totalItemWithoutFilter,
-      startPageIndex,
-      ReachedPageLimit,
-      pkges.length
-    );
     if (
       ReachedbufferLimit > pkges.length &&
       totalItemWithoutFilter > searchIndex
@@ -108,7 +80,6 @@ function Dashboard() {
   const getPackageListPerPage = () => {
     const pageStart = (currentPage - 1) * itemPerPage;
     const pageEnd = pageStart + itemPerPage;
-    console.log("calling getPackageListPerPage - ", currentPage);
     return pkges.slice(pageStart, pageEnd);
   };
 

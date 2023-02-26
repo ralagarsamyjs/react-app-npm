@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import pkgService from "../services/pkgService";
 import { IPackageInfoMini, IPackageVersionInfoMini } from "./../models/package";
 import Select from "react-select";
-import ValueType from "react-select";
 
 import { useNavigate } from "react-router-dom";
 

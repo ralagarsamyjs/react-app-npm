@@ -26,8 +26,6 @@ function Pagination(props: IPaginationProps) {
   if (!totalItems) return null;
 
   const total = currentPage * pageSize;
-  console.log("Pagination - ", total, totalItems);
-
   const pages = _.range(startIndex, startIndex + maxPages);
 
   const getPrevBtnClasses = () => {
