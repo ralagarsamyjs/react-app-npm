@@ -3,6 +3,7 @@ import {
   IRawMaintainersInfo,
   IRawPackage,
   IRawPackageInfo,
+  IRawPackageList,
 } from "../models/package";
 import { IPackageInfoMini, IPackageVersionInfoMini } from "./../models/package";
 
@@ -11,7 +12,7 @@ class PkgService {
     baseURL: "https://registry.npmjs.org",
   });
 
-  async getPackageListWithInputText(
+  async getPackageListWithInputText_Backup(
     input: string,
     size: number = 20,
     from: number = 0
@@ -28,6 +29,37 @@ class PkgService {
       return Data;
     } catch (err) {
       return Data;
+    }
+  }
+
+  async getPackageListWithInputText(
+    input: string,
+    size: number = 20,
+    from: number = 0
+  ) {
+    const resource = `/-/v1/search?text=${input}&size=${size}&from=${from}`;
+    let output: IRawPackageList = {
+      packages: [],
+      searchStartIndex: 0,
+      searchEndIndex: 0,
+      total: 0,
+    };
+    let filteredData: IRawPackage[] = [];
+    try {
+      const response = await this.pkgservice.get(resource);
+      filteredData = response.data.objects.filter((pkg: IRawPackage) => {
+        if (pkg.package.name.includes(input)) return pkg;
+      });
+      output.packages = filteredData.map((pkg) => pkg.package);
+      output.total = response.data.total;
+      output.searchStartIndex = from;
+      output.searchEndIndex = size;
+      //   console.log("total: ", output.total);
+      //   console.log("searched package total: ", output.packages.length);
+      //   console.log("offset and size : ", from, size);
+      return output;
+    } catch (err) {
+      return output;
     }
   }
 

@@ -45,8 +45,8 @@ export interface IRawPackageInfo {
 
 export interface IRawPackageList {
   packages: IRawPackageInfo[];
-  queryStartIndex: number;
-  queryEndIndex: number;
+  searchStartIndex: number;
+  searchEndIndex: number;
   total: number;
 }
 
