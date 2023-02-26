@@ -1,24 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Heading from "./components/heading";
+import PackageList from "./components/packageList";
+import SearchPackage from "./components/searchPackage";
+import { IRawPackageInfo } from "./models/package";
+import pkgService from "./services/pkgService";
+import Pagination from "./components/pagination";
 
 function App() {
+  const [pkges, setPkges] = useState<IRawPackageInfo[]>([]);
+  const [pkgName, setPkgName] = useState("");
+  const [searchText, setSearchText] = useState("express");
+  const [loading, setLoading] = useState(true);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [maxPageLimit, setMaxPageLimit] = useState(5);
+  // const [minPageLimit, setMinPageLimit] = useState(0);
+  const [itemPerPage, setItemPerPage] = useState(10);
+
+  const getPackagelist = async () => {
+    const service = pkgService.getPkgServiceInstance();
+    const list: IRawPackageInfo[] = await service.getPackageListWithInputText(
+      searchText
+    );
+    setPkges(list);
+    setLoading(false);
+  };
+  useEffect(() => {
+    setLoading(true);
+    getPackagelist();
+  }, [searchText]);
+
+  const onSearchTextHandler = (inputText: string) => {
+    if (inputText) {
+      setSearchText(inputText);
+    } else {
+      setSearchText("");
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Heading title={"NPM Package Search Directory"} />
+      <SearchPackage
+        onSearchText={onSearchTextHandler}
+        searchText={searchText}
+      />
+      <PackageList pkges={pkges} />
+      <Pagination
+        currentPage={currentPage}
+        maxPageLimit={maxPageLimit}
+        totalPages={pkges.length}
+      />
     </div>
   );
 }
