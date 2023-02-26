@@ -4,17 +4,14 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
-import Navbar from "./components/navbar";
+import App from "./App";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Navbar />
-    </BrowserRouter>
+    <App />
   </React.StrictMode>
 );
 
