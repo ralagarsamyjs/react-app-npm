@@ -47,7 +47,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## purpose of the application
 
-This application provides search functionality that cane be used to search the NPM packages based on V1 API(https://registry.npmjs.org/). V1 search API supports only text based search which gives us back all the packges which contains the seach text anywhere in it's content. but what we want is to search the package name that matches with input search text. so package name filter will be applied on this searched results. Then final result will be displayed in a paginated table with info button for each resulted item.
+This application provides search functionality that can be used to search the NPM packages based on V1 API(https://registry.npmjs.org/). V1 search API supports only text based search which gives us back all the packges that contains the seach text anywhere in it's content. but what we want is to search the package name that matches with input search text. so package name filter will be applied on top of the searched results. Then final result will be displayed in a paginated table with info button for each resulted item.
 
 ## Package Info
 
