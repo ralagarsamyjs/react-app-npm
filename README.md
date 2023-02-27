@@ -44,3 +44,38 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## purpose of the application
+
+This application provides search functionality that cane be used to search the NPM packages based on V1 API(https://registry.npmjs.org/). V1 search API supports only text based search which gives us back all the packges which contains the seach text anywhere in it's content. but what we want is to search the package name that matches with input search text. so package name filter will be applied on this searched results. Then final result will be displayed in a paginated table with info button for each resulted item.
+
+## Package Info
+
+info button will take us to new screen to select a particular version of package that will show the package info in detail.
+
+## Pagination
+
+V1 search API supports maximum of 250 result at a time, if result has more than 250 items for a particualr seach, then need to query the API by size of 250 with updated offset( first time offset is 0, next time it will be 250. it will go on until it reaches total). so decided to show the 10 pagination index consistantly with previous and next button. once it reaches end of current buffer, it will re query back with updated offset and the result will be appended in data buffer.
+
+## Dependency packages
+
+The below additioanl packages are used
+
+1. react-router-dom
+2. lodash
+3. react-search
+4. bootstrap css frame work
+5. axios
+
+## Unit Tests
+
+Jest framework is integrated with react-create-app project out of the box.
+Added the following unit tests
+
+1. rendering heading properly
+2. rendering search box, search text
+
+## Notes
+
+This project is created using below command
+npx create-react-app {project_name} --template typescripts
